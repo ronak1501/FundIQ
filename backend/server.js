@@ -5,7 +5,12 @@ const dotenv = require('dotenv');
 dotenv.config();
 
 const app = express();
-app.use(cors({ origin: ['http://localhost:5173', 'http://localhost:3000'], credentials: true }));
+const allowedOrigins = [
+    'http://localhost:5173',
+    'http://localhost:3000',
+    process.env.FRONTEND_URL, // e.g. https://fundiq.vercel.app
+].filter(Boolean);
+app.use(cors({ origin: allowedOrigins, credentials: true }));
 app.use(express.json());
 
 // ── Global DB mode flag ────────────────────────────────────────────────────

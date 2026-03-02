@@ -5,11 +5,10 @@ const dotenv = require('dotenv');
 dotenv.config();
 
 const app = express();
-// Allow all origins in production (wildcard). Lock down after confirming it works.
-app.use(cors({
-    origin: true,        // reflects the request origin — allows any domain
-    credentials: true,
-}));
+// Allow all origins — handles CORS preflight (OPTIONS) for all routes
+const corsOptions = { origin: true, credentials: true };
+app.use(cors(corsOptions));
+app.options('*', cors(corsOptions)); // ← explicitly respond to preflight for every route
 app.use(express.json());
 
 // ── Global DB mode flag ────────────────────────────────────────────────────

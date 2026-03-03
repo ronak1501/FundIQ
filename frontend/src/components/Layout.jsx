@@ -39,7 +39,7 @@ export default function Layout({ children }) {
     };
 
     return (
-        <div style={{ display: 'flex', minHeight: '100vh', background: '#0a0e1a' }}>
+        <div style={{ minHeight: '100vh', background: '#0a0e1a' }}>
             {/* Sidebar Overlay (mobile) */}
             {sidebarOpen && (
                 <div onClick={() => setSidebarOpen(false)}
@@ -120,7 +120,7 @@ export default function Layout({ children }) {
             </aside>
 
             {/* Main Content */}
-            <div className="flex-1 flex flex-col min-h-screen lg:ml-[240px] w-full">
+            <div className="flex flex-col min-h-screen lg:ml-[240px]">
                 {/* Topbar */}
                 <header style={{
                     background: 'rgba(10,14,26,0.95)', backdropFilter: 'blur(20px)',

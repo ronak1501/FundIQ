@@ -232,10 +232,11 @@ export default function Dashboard() {
                     )}
                 </div>
 
-                <div className="glass-card animate-fade-in-delay-2" style={{ padding: 20 }}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
-                        <h3 style={{ fontWeight: 700, fontSize: 15 }}>Top Holdings — Invested vs Current</h3>
-                        <button onClick={() => navigate('/portfolio')} className="btn-secondary" style={{ fontSize: 12, padding: '5px 12px' }}>
+                {/* Hidden on small screens — only visible on lg+ */}
+                <div className="hidden lg:block glass-card animate-fade-in-delay-2" style={{ padding: 20 }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16, gap: 8 }}>
+                        <h3 style={{ fontWeight: 700, fontSize: 14, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>Top Holdings — Invested vs Current</h3>
+                        <button onClick={() => navigate('/portfolio')} className="btn-secondary" style={{ fontSize: 12, padding: '5px 12px', flexShrink: 0 }}>
                             View All <ChevronRight size={12} />
                         </button>
                     </div>

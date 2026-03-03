@@ -119,14 +119,14 @@ export default function Layout({ children }) {
             </aside>
 
             {/* Main Content */}
-            <div className="flex-1 flex flex-col min-w-0 h-screen overflow-hidden lg:pl-4">
+            <div className="flex-1 flex flex-col min-w-0 h-screen overflow-hidden">
                 {/* Topbar */}
-                <header className="shrink-0 flex items-center justify-center sticky top-0 z-30 px-6 h-16"
+                <header className="shrink-0 flex items-center px-6 h-16"
                     style={{
                         background: 'rgba(10,14,26,0.95)', backdropFilter: 'blur(20px)',
                         borderBottom: '1px solid rgba(99,130,255,0.1)'
                     }}>
-                    <div className="max-w-[1400px] w-full flex items-center justify-between">
+                    <div className="w-full flex items-center justify-between">
                         <div className="flex items-center gap-4">
                             <button onClick={() => setSidebarOpen(true)} className="lg:hidden bg-transparent border-none text-[#f1f5f9] cursor-pointer flex">
                                 <Menu size={22} />
@@ -156,8 +156,8 @@ export default function Layout({ children }) {
                 </header>
 
                 {/* Page Content */}
-                <main className="flex-1 overflow-y-auto p-6 scroll-smooth">
-                    <div className="max-w-[1400px] mx-auto w-full pb-10">
+                <main className="flex-1 overflow-y-auto overflow-x-hidden p-6 scroll-smooth">
+                    <div className="w-full max-w-full pb-10">
                         {children}
                     </div>
                 </main>

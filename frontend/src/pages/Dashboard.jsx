@@ -63,7 +63,7 @@ export default function Dashboard() {
 
     // Show skeleton only on very first load (no cached data yet)
     if (loading && !data) return (
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 16 }}>
+        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
             {[...Array(8)].map((_, i) => (
                 <div key={i} className="skeleton" style={{ height: 120, borderRadius: 16 }} />
             ))}
@@ -264,76 +264,78 @@ export default function Dashboard() {
                             <p>No holdings yet. Add mutual funds to get started.</p>
                         </div>
                     ) : (
-                        <table className="data-table">
-                            <thead>
-                                <tr>
-                                    <th>Fund</th>
-                                    <th>Invested</th>
-                                    <th>Current</th>
-                                    <th style={{ whiteSpace: 'nowrap' }}>Personal Ret.</th>
-                                    <th style={{ whiteSpace: 'nowrap' }}>Fund Performance</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {holdings.slice(0, 5).map(h => {
-                                    const curr = h.units * h.currentNav;
-                                    const ret = ((curr - h.investedAmount) / h.investedAmount) * 100;
-                                    // CAGR = (currentValue / invested)^(365 / daysHeld) - 1
-                                    const daysHeld = h.purchaseDate
-                                        ? (Date.now() - new Date(h.purchaseDate).getTime()) / 86400000
-                                        : 0;
+                        <div style={{ overflowX: 'auto' }}>
+                            <table className="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Fund</th>
+                                        <th>Invested</th>
+                                        <th>Current</th>
+                                        <th style={{ whiteSpace: 'nowrap' }}>Personal Ret.</th>
+                                        <th style={{ whiteSpace: 'nowrap' }}>Fund Performance</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {holdings.slice(0, 5).map(h => {
+                                        const curr = h.units * h.currentNav;
+                                        const ret = ((curr - h.investedAmount) / h.investedAmount) * 100;
+                                        // CAGR = (currentValue / invested)^(365 / daysHeld) - 1
+                                        const daysHeld = h.purchaseDate
+                                            ? (Date.now() - new Date(h.purchaseDate).getTime()) / 86400000
+                                            : 0;
 
-                                    const fr = h.returns || {};
-                                    const renderPerf = (val, label) => (
-                                        <div style={{ display: 'flex', flexDirection: 'column', minWidth: 42 }}>
-                                            <span style={{ fontSize: 9, color: '#64748b', fontWeight: 600 }}>{label}</span>
-                                            <span style={{ fontSize: 11, fontWeight: 700, color: val >= 0 ? '#10b981' : val < 0 ? '#ef4444' : '#475569' }}>
-                                                {val != null ? `${val >= 0 ? '+' : ''}${val.toFixed(1)}%` : '—'}
-                                            </span>
-                                        </div>
-                                    );
+                                        const fr = h.returns || {};
+                                        const renderPerf = (val, label) => (
+                                            <div style={{ display: 'flex', flexDirection: 'column', minWidth: 42 }}>
+                                                <span style={{ fontSize: 9, color: '#64748b', fontWeight: 600 }}>{label}</span>
+                                                <span style={{ fontSize: 11, fontWeight: 700, color: val >= 0 ? '#10b981' : val < 0 ? '#ef4444' : '#475569' }}>
+                                                    {val != null ? `${val >= 0 ? '+' : ''}${val.toFixed(1)}%` : '—'}
+                                                </span>
+                                            </div>
+                                        );
 
-                                    return (
-                                        <tr key={h._id}>
-                                            <td>
-                                                <div>
-                                                    <p style={{ fontWeight: 600, fontSize: 13 }}>{h.schemeName?.slice(0, 28) || 'Fund'}{h.schemeName?.length > 28 ? '…' : ''}</p>
-                                                    <p style={{ fontSize: 11, color: '#475569', marginTop: 1 }}>{h.category} · {daysHeld > 0 ? `${Math.floor(daysHeld)}d held` : 'today'}</p>
-                                                </div>
-                                            </td>
-                                            <td className="font-numeric" style={{ fontSize: 13 }}>₹{h.investedAmount?.toLocaleString('en-IN')}</td>
-                                            <td className="font-numeric" style={{ fontSize: 13, fontWeight: 600 }}>₹{Math.round(curr).toLocaleString('en-IN')}</td>
-                                            <td>
-                                                <div style={{ display: 'flex', flexDirection: 'column' }}>
-                                                    <span className={`badge ${ret >= 0 ? 'badge-green' : 'badge-red'}`} style={{ width: 'fit-content' }}>
-                                                        {ret >= 0 ? '↑' : '↓'} {Math.abs(ret).toFixed(2)}%
-                                                    </span>
-                                                    {daysHeld > 30 && h.investedAmount > 0 && (
-                                                        <span style={{ fontSize: 10, color: '#64748b', marginTop: 4 }}>
-                                                            {((Math.pow(curr / h.investedAmount, 365 / daysHeld) - 1) * 100).toFixed(1)}% p.a.
-                                                        </span>
-                                                    )}
-                                                </div>
-                                            </td>
-                                            <td>
-                                                {fr.retSI != null ? (
-                                                    <div style={{ display: 'flex', flexDirection: 'column' }}>
-                                                        <span style={{ fontSize: 13, fontWeight: 700, color: fr.retSI >= 0 ? '#10b981' : '#ef4444' }}>
-                                                            {fr.retSI >= 0 ? '↑' : '↓'} {Math.abs(fr.retSI).toFixed(1)}%
-                                                        </span>
-                                                        <span style={{ fontSize: 10, color: '#64748b', marginTop: 3 }}>
-                                                            {fr.siYears != null ? `${fr.siYears.toFixed(1)} years since launch` : 'Since Inception'}
-                                                        </span>
+                                        return (
+                                            <tr key={h._id}>
+                                                <td>
+                                                    <div>
+                                                        <p style={{ fontWeight: 600, fontSize: 13 }}>{h.schemeName?.slice(0, 28) || 'Fund'}{h.schemeName?.length > 28 ? '…' : ''}</p>
+                                                        <p style={{ fontSize: 11, color: '#475569', marginTop: 1 }}>{h.category} · {daysHeld > 0 ? `${Math.floor(daysHeld)}d held` : 'today'}</p>
                                                     </div>
-                                                ) : (
-                                                    <span style={{ fontSize: 11, color: '#475569' }}>—</span>
-                                                )}
-                                            </td>
-                                        </tr>
-                                    );
-                                })}
-                            </tbody>
-                        </table>
+                                                </td>
+                                                <td className="font-numeric" style={{ fontSize: 13 }}>₹{h.investedAmount?.toLocaleString('en-IN')}</td>
+                                                <td className="font-numeric" style={{ fontSize: 13, fontWeight: 600 }}>₹{Math.round(curr).toLocaleString('en-IN')}</td>
+                                                <td>
+                                                    <div style={{ display: 'flex', flexDirection: 'column' }}>
+                                                        <span className={`badge ${ret >= 0 ? 'badge-green' : 'badge-red'}`} style={{ width: 'fit-content' }}>
+                                                            {ret >= 0 ? '↑' : '↓'} {Math.abs(ret).toFixed(2)}%
+                                                        </span>
+                                                        {daysHeld > 30 && h.investedAmount > 0 && (
+                                                            <span style={{ fontSize: 10, color: '#64748b', marginTop: 4 }}>
+                                                                {((Math.pow(curr / h.investedAmount, 365 / daysHeld) - 1) * 100).toFixed(1)}% p.a.
+                                                            </span>
+                                                        )}
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    {fr.retSI != null ? (
+                                                        <div style={{ display: 'flex', flexDirection: 'column' }}>
+                                                            <span style={{ fontSize: 13, fontWeight: 700, color: fr.retSI >= 0 ? '#10b981' : '#ef4444' }}>
+                                                                {fr.retSI >= 0 ? '↑' : '↓'} {Math.abs(fr.retSI).toFixed(1)}%
+                                                            </span>
+                                                            <span style={{ fontSize: 10, color: '#64748b', marginTop: 3 }}>
+                                                                {fr.siYears != null ? `${fr.siYears.toFixed(1)} years since launch` : 'Since Inception'}
+                                                            </span>
+                                                        </div>
+                                                    ) : (
+                                                        <span style={{ fontSize: 11, color: '#475569' }}>—</span>
+                                                    )}
+                                                </td>
+                                            </tr>
+                                        );
+                                    })}
+                                </tbody>
+                            </table>
+                        </div>
                     )}
                 </div>
 

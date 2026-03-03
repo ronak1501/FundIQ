@@ -288,7 +288,7 @@ export default function AddFund() {
                             <span style={{ background: 'linear-gradient(135deg,#6366f1,#8b5cf6)', borderRadius: 8, padding: '4px 10px', fontSize: 12, color: 'white' }}>2</span>
                             Investment Details
                         </h3>
-                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
 
                             {/* Invested Amount */}
                             <div>
@@ -379,7 +379,7 @@ export default function AddFund() {
                                 </label>
                             </div>
                             {form.isSIP && (
-                                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }} className="animate-fade-in">
+                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 animate-fade-in">
                                     <div>
                                         <label className="form-label">Monthly SIP Amount (₹)</label>
                                         <input className="input-field" type="number" placeholder="5000"
@@ -401,7 +401,7 @@ export default function AddFund() {
                                     <TrendingUp size={12} style={{ marginRight: 5 }} />
                                     Performance Snapshot
                                 </p>
-                                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 12 }}>
+                                <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mt-4">
                                     {/* Buy NAV */}
                                     <div style={{ textAlign: 'center', padding: '10px 6px', background: 'rgba(99,102,241,0.07)', borderRadius: 10 }}>
                                         <p style={{ fontSize: 10, color: '#475569', marginBottom: 4 }}>{isPastDate ? 'BUY NAV' : 'NAV'}</p>

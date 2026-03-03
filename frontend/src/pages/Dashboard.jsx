@@ -184,7 +184,7 @@ export default function Dashboard() {
             </div>
 
             {/* Stat Cards */}
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 16 }}>
+            <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
                 <StatCard title="Total Invested" value={formatCurrency(summary.totalInvested)} sub="Your total cost" color="#6366f1" icon={Wallet} glow="stat-glow-blue" />
                 <StatCard title="Current Value" value={formatCurrency(summary.currentValue)} sub={`${summary.holdingsCount || 0} funds`} color="#10b981" icon={TrendingUp} glow="stat-glow-green" trend={summary.gainLossPercent} />
                 <StatCard
@@ -213,7 +213,7 @@ export default function Dashboard() {
             </div>
 
             {/* Charts Row */}
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1.5fr', gap: 16 }}>
+            <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.5fr] gap-4">
                 <div className="glass-card animate-fade-in-delay-1" style={{ padding: 20 }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
                         <h3 style={{ fontWeight: 700, fontSize: 15 }}>Asset Allocation</h3>
@@ -250,7 +250,7 @@ export default function Dashboard() {
             </div>
 
             {/* Holdings + Suggestions */}
-            <div style={{ display: 'grid', gridTemplateColumns: '1.6fr 1fr', gap: 16 }}>
+            <div className="grid grid-cols-1 lg:grid-cols-[1.6fr_1fr] gap-4">
                 <div className="glass-card animate-fade-in-delay-2" style={{ padding: 20 }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
                         <h3 style={{ fontWeight: 700, fontSize: 15 }}>Recent Holdings</h3>

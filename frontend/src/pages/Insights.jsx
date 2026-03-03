@@ -106,7 +106,7 @@ export default function Insights() {
 
             {/* Risk Score Card */}
             <div className="glass-card animate-fade-in" style={{ padding: 24 }}>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 32 }}>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                     <div>
                         <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 16 }}>
                             <div style={{ background: `${riskDetail.color}20`, borderRadius: 10, padding: 10 }}>
@@ -144,7 +144,7 @@ export default function Insights() {
             </div>
 
             {/* Main grid */}
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20 }}>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
                 {/* AI Suggestions */}
                 <div className="glass-card animate-fade-in-delay-1" style={{ padding: 24 }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 20 }}>
@@ -276,7 +276,7 @@ export default function Insights() {
                     <h3 style={{ fontWeight: 700, fontSize: 15 }}>Suggested Portfolio Rebalance</h3>
                     <span className="badge badge-blue" style={{ marginLeft: 'auto' }}>Based on {data?.user?.riskProfile || 'Moderate'} profile</span>
                 </div>
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 16 }}>
+                <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
                     {Object.entries(REBALANCE_SUGGESTIONS['Moderate']).map(([cat, pct], i) => {
                         const colors = ['#6366f1', '#10b981', '#f59e0b', '#06b6d4'];
                         return (

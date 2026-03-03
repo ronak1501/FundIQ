@@ -86,13 +86,13 @@ export default function SIPCalculator() {
     ];
 
     return (
-        <div style={{ maxWidth: 860, margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 20 }}>
+        <div className="max-w-[860px] mx-auto flex flex-col gap-5">
             <div>
                 <h1 style={{ fontSize: 22, fontWeight: 700 }}>SIP Calculator</h1>
                 <p style={{ color: '#475569', fontSize: 14 }}>Project your wealth growth with systematic investment planning</p>
             </div>
 
-            <div style={{ display: 'grid', gridTemplateColumns: '340px 1fr', gap: 20 }}>
+            <div className="grid grid-cols-1 lg:grid-cols-[340px_1fr] gap-5">
                 {/* Input Panel */}
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
                     <div className="glass-card animate-fade-in" style={{ padding: 24 }}>
@@ -168,7 +168,7 @@ export default function SIPCalculator() {
                     {result ? (
                         <>
                             {/* Summary cards */}
-                            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 12 }} className="animate-fade-in">
+                            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 animate-fade-in">
                                 {[
                                     { label: 'Total Invested', value: formatCurrency(result.invested), color: '#6366f1', icon: '💰' },
                                     { label: 'Maturity Value', value: formatCurrency(result.maturity), color: '#10b981', icon: '🏆' },

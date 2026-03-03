@@ -78,7 +78,7 @@ export default function Portfolio() {
             </div>
 
             {/* Summary bar */}
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 12 }}>
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
                 {[
                     { label: 'Total Invested', value: formatCurrency(summary.totalInvested || 0), color: '#6366f1' },
                     { label: 'Current Value', value: formatCurrency(summary.currentValue || 0), color: '#10b981' },
@@ -92,7 +92,7 @@ export default function Portfolio() {
                 ))}
             </div>
 
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 280px', gap: 20 }}>
+            <div className="grid grid-cols-1 lg:grid-cols-[1fr_280px] gap-5">
                 {/* Holdings Table */}
                 <div className="glass-card" style={{ padding: 20 }}>
                     <h3 style={{ fontWeight: 700, fontSize: 15, marginBottom: 16 }}>All Holdings</h3>

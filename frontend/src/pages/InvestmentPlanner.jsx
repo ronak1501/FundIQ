@@ -307,7 +307,7 @@ export default function InvestmentPlanner() {
                     badge="Step 1"
                 />
 
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 16 }}>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                     <RupeeInput
                         label="Monthly Income (take-home)"
                         value={income}
@@ -362,7 +362,7 @@ export default function InvestmentPlanner() {
                         </button>
 
                         {showBreakdown && (
-                            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, marginTop: 4 }}>
+                            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mt-1">
                                 {/* Stat rows */}
                                 <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
                                     {[
@@ -407,11 +407,7 @@ export default function InvestmentPlanner() {
                         )}
 
                         {/* Surplus meter */}
-                        <div style={{
-                            display: 'grid',
-                            gridTemplateColumns: 'repeat(3, 1fr)',
-                            gap: 12, marginTop: 4
-                        }}>
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mt-1">
                             {[
                                 { label: 'Total Outflow', val: totalOutflow, color: '#ef4444' },
                                 { label: 'Investable Surplus', val: surplus, color: '#10b981' },
@@ -444,7 +440,7 @@ export default function InvestmentPlanner() {
                     badge="Step 2"
                 />
 
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20 }}>
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
                     {/* Recommendation card */}
                     <div style={{
                         background: 'linear-gradient(135deg,#10b98115,#06b6d415)',
@@ -526,7 +522,7 @@ export default function InvestmentPlanner() {
                 />
 
                 {/* Inputs */}
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 20, marginBottom: 28 }}>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mb-7">
                     {/* SIP Amount */}
                     <div>
                         <label className="form-label">Monthly SIP Amount</label>
@@ -629,7 +625,7 @@ export default function InvestmentPlanner() {
                 {sipAmt > 0 && (
                     <>
                         {/* Result Cards */}
-                        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 16, marginBottom: 24 }}>
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
                             {[
                                 {
                                     label: 'Total Invested',
@@ -758,7 +754,7 @@ export default function InvestmentPlanner() {
                             <span className="gradient-text">financial freedom</span>{' '}
                             to enjoy those assets stress-free."
                         </p>
-                        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 12, marginTop: 16 }}>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 mt-4">
                             {[
                                 { icon: Home, label: 'Home Loan EMI', desc: 'Builds a roof over your head', color: '#f59e0b' },
                                 { icon: Car, label: 'Car Loan EMI', desc: 'Gives you the freedom to move', color: '#06b6d4' },

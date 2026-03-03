@@ -43,18 +43,17 @@ export default function Layout({ children }) {
             {/* Sidebar Overlay (mobile) */}
             {sidebarOpen && (
                 <div onClick={() => setSidebarOpen(false)}
-                    style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.6)', zIndex: 40, display: 'none' }}
+                    style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.6)', zIndex: 40 }}
                     className="lg:hidden" />
             )}
 
             {/* Sidebar */}
-            <aside style={{
-                width: 240, minHeight: '100vh', background: '#0f1629',
-                borderRight: '1px solid rgba(99,130,255,0.12)',
-                display: 'flex', flexDirection: 'column', padding: '20px 12px',
-                position: 'fixed', left: 0, top: 0, bottom: 0, zIndex: 50,
-                transform: sidebarOpen ? 'translateX(0)' : 'translateX(0)',
-            }}>
+            <aside
+                className={`fixed left-0 top-0 bottom-0 z-50 w-[240px] min-h-screen flex flex-col pt-5 pb-5 px-3 transition-transform duration-300 ease-in-out lg:translate-x-0 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'}`}
+                style={{
+                    background: '#0f1629',
+                    borderRight: '1px solid rgba(99,130,255,0.12)',
+                }}>
                 {/* Logo */}
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 32, padding: '0 4px' }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: 10, cursor: 'pointer' }} onClick={() => navigate('/dashboard')}>
@@ -66,6 +65,10 @@ export default function Layout({ children }) {
                             <p style={{ fontSize: 9, color: '#6366f1', fontWeight: 600, textTransform: 'uppercase', letterSpacing: 1 }}>AI Portfolio</p>
                         </div>
                     </div>
+                    {/* Mobile close button */}
+                    <button onClick={() => setSidebarOpen(false)} className="lg:hidden" style={{ background: 'transparent', border: 'none', color: '#94a3b8', cursor: 'pointer' }}>
+                        <X size={20} />
+                    </button>
                 </div>
 
                 {/* Nav */}
@@ -117,40 +120,49 @@ export default function Layout({ children }) {
             </aside>
 
             {/* Main Content */}
-            <div style={{ marginLeft: 240, flex: 1, display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+            <div className="flex-1 flex flex-col min-h-screen lg:ml-[240px] w-full">
                 {/* Topbar */}
                 <header style={{
                     background: 'rgba(10,14,26,0.95)', backdropFilter: 'blur(20px)',
                     borderBottom: '1px solid rgba(99,130,255,0.1)',
                     padding: '0 24px', height: 64,
-                    display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+                    display: 'flex', alignItems: 'center', justifyContent: 'center',
                     position: 'sticky', top: 0, zIndex: 30
                 }}>
-                    <div>
-                        <h2 style={{ fontWeight: 700, fontSize: 18 }}>
-                            {navItems.find(n => n.path === location.pathname)?.label || 'Dashboard'}
-                        </h2>
-                        <p style={{ fontSize: 12, color: '#475569' }}>
-                            {new Date().toLocaleDateString('en-IN', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}
-                        </p>
-                    </div>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-                        <button style={{ position: 'relative', background: 'rgba(99,102,241,0.1)', border: '1px solid rgba(99,102,241,0.2)', borderRadius: 10, padding: 9, cursor: 'pointer', display: 'flex' }}>
-                            <Bell size={17} color="#818cf8" />
-                            <span className="notification-dot" />
-                        </button>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '6px 12px', background: 'rgba(99,102,241,0.08)', borderRadius: 10, border: '1px solid rgba(99,102,241,0.2)' }}>
-                            <div style={{ width: 28, height: 28, borderRadius: 6, background: 'linear-gradient(135deg,#6366f1,#8b5cf6)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 700, fontSize: 12 }}>
-                                {user?.name?.[0]?.toUpperCase() || 'U'}
+                    <div style={{ maxWidth: 1400, width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
+                            <button onClick={() => setSidebarOpen(true)} className="lg:hidden" style={{ background: 'transparent', border: 'none', color: '#f1f5f9', cursor: 'pointer', display: 'flex' }}>
+                                <Menu size={22} />
+                            </button>
+                            <div>
+                                <h2 style={{ fontWeight: 700, fontSize: 18 }}>
+                                    {navItems.find(n => n.path === location.pathname)?.label || 'Dashboard'}
+                                </h2>
+                                <p style={{ fontSize: 12, color: '#475569' }} className="hidden sm:block">
+                                    {new Date().toLocaleDateString('en-IN', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}
+                                </p>
                             </div>
-                            <span style={{ fontSize: 13, fontWeight: 600 }}>{user?.name?.split(' ')[0]}</span>
+                        </div>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+                            <button style={{ position: 'relative', background: 'rgba(99,102,241,0.1)', border: '1px solid rgba(99,102,241,0.2)', borderRadius: 10, padding: 9, cursor: 'pointer', display: 'flex' }}>
+                                <Bell size={17} color="#818cf8" />
+                                <span className="notification-dot" />
+                            </button>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '6px 12px', background: 'rgba(99,102,241,0.08)', borderRadius: 10, border: '1px solid rgba(99,102,241,0.2)' }}>
+                                <div style={{ width: 28, height: 28, borderRadius: 6, background: 'linear-gradient(135deg,#6366f1,#8b5cf6)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 700, fontSize: 12 }}>
+                                    {user?.name?.[0]?.toUpperCase() || 'U'}
+                                </div>
+                                <span className="hidden sm:inline" style={{ fontSize: 13, fontWeight: 600 }}>{user?.name?.split(' ')[0]}</span>
+                            </div>
                         </div>
                     </div>
                 </header>
 
                 {/* Page Content */}
                 <main style={{ flex: 1, padding: '24px', overflowY: 'auto' }}>
-                    {children}
+                    <div style={{ maxWidth: 1400, margin: '0 auto', width: '100%' }}>
+                        {children}
+                    </div>
                 </main>
             </div>
         </div>

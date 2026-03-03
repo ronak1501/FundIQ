@@ -1,0 +1,143 @@
+# 🚀 FundIQ — Project Overview
+
+---
+
+## 🛠️ Tech Stack
+
+### 🖥️ Frontend
+| Technology | Version | Purpose |
+|---|---|---|
+| **React** | v19 | Core UI framework |
+| **Vite** | v7 | Lightning-fast build tool & dev server |
+| **TailwindCSS** | v4 | Utility-first styling |
+| **React Router DOM** | v7 | Client-side page routing |
+| **Framer Motion** | v12 | Smooth page & component animations |
+| **Chart.js + react-chartjs-2** | v4/v5 | Donut, bar, line, radar charts |
+| **Axios** | v1 | HTTP requests with JWT interceptors |
+| **Lucide React** | v0.575 | Icon library |
+| **React Hot Toast** | v2 | Beautiful toast notifications |
+
+### ⚙️ Backend
+| Technology | Version | Purpose |
+|---|---|---|
+| **Node.js + Express** | v4 | REST API server |
+| **MongoDB + Mongoose** | v8 | Database & ODM layer |
+| **JWT (jsonwebtoken)** | v9 | Authentication tokens |
+| **bcryptjs** | v2 | Password hashing |
+| **Axios** | v1 | Fetches live NAV data from AMFI |
+| **node-cron** | v3 | Scheduled background tasks |
+| **dotenv** | v16 | Environment variable management |
+| **nodemon** | v3 | Dev auto-restart |
+
+### ☁️ Infrastructure & APIs
+| Layer | Tech |
+|---|---|
+| **Deployment** | Vercel |
+| **Live NAV Data** | MFAPI.in → AMFI (10,000+ mutual funds) |
+| **Auth** | JWT Bearer Token strategy |
+| **Database Host** | MongoDB Atlas (Cloud) |
+
+---
+
+## 📋 Short Summary
+
+> **FundIQ** is an AI-powered Mutual Fund Portfolio Intelligence Platform. It lets users track their mutual fund investments in real-time, see live NAV prices from AMFI, visualize their portfolio allocation through interactive charts, calculate SIP projections, and get AI-driven risk scores and rebalancing suggestions — all behind a secure JWT auth system.
+
+---
+
+## 📖 The Long Story — *How FundIQ Came to Life*
+
+---
+
+It started with a frustration most Indian investors know all too well.
+
+Ronak was juggling five different mutual fund apps — one for NAVs, one for SIP tracking, a spreadsheet for P&L, and a calculator bookmarked somewhere he could never find quickly. Every Monday morning, he'd piece together the full picture of his portfolio manually, cross-referencing numbers, asking himself: *"Am I actually growing? Is my portfolio too risky? Should I be putting more in equity?"*
+
+The answer was always buried somewhere in the noise.
+
+So he decided to build **FundIQ** — not just another fund tracker, but an intelligent portfolio copilot.
+
+---
+
+### 🏗️ Building the Foundation
+
+The journey began with a **Node.js + Express** backend, carefully structured with Mongoose models for two core entities: the `User` and their `Portfolio` holdings. MongoDB Atlas was chosen as the database for its flexibility with nested documents — perfect for storing a list of fund holdings with SIP toggles and unit counts.
+
+Security was non-negotiable from day one. Passwords were hashed with **bcryptjs** before ever touching the database, and every authenticated route was gated behind **JWT Bearer Tokens**. Even the registration flow included a `riskProfile` selection — conservative, moderate, or aggressive — baked right into the user model.
+
+---
+
+### 📡 Connecting to the Real World
+
+The magic behind FundIQ's live data? A simple but powerful truth — AMFI (Association of Mutual Funds in India) publishes the NAV of every registered mutual fund daily, and **mfapi.in** makes it beautifully accessible via REST.
+
+The backend built two critical endpoints:
+- **`/api/portfolio/search?q=...`** — queries 10,000+ AMFI funds in milliseconds
+- **`/api/portfolio/nav/:code`** — fetches the real-time NAV for any scheme code
+
+No third-party paid APIs. No rate limits. Just clean, live data from the source.
+
+`node-cron` was wired in to handle scheduled background jobs — ensuring NAV data could be refreshed systematically even without user interaction.
+
+---
+
+### ⚛️ The React Frontend — Where It All Comes Alive
+
+The frontend was scaffolded with **Vite + React 19**, chosen for its blazing-fast hot module replacement during development. **TailwindCSS v4** powered the design system — a dark fintech aesthetic with glassmorphism cards, gradient accents, and a sidebar layout that felt premium from the first click.
+
+**React Router DOM v7** connected six distinct pages:
+
+- **`/login`** — A sleek auth page where users sign up with their risk profile
+- **`/dashboard`** — The nerve center: real-time portfolio stats, AI suggestions, and allocation charts
+- **`/portfolio`** — A full table of holdings with invested value, current NAV, units, P&L, and return %
+- **`/add-fund`** — Live search through AMFI's 10,000+ funds with SIP toggle
+- **`/sip-calculator`** — An interactive SIP projection tool with sliders and an animated line chart
+- **`/insights`** — The AI brain: risk score (0–100), radar chart for diversification, and rebalancing targets
+
+**Framer Motion** breathed life into every page transition, card entrance, and data update. **Chart.js** rendered four different chart types — donut for allocation, bar for category breakdown, line for SIP projections, and radar for the diversification map.
+
+An **AuthContext** managed JWT tokens globally, with **Axios interceptors** automatically attaching the Bearer token to every API call. If a token expired, the user was cleanly redirected to login.
+
+**React Hot Toast** handled all feedback notifications — from "Fund added successfully!" to "Invalid credentials" — ensuring users were never left wondering what just happened.
+
+---
+
+### 🤖 The "AI" Layer — Smart Without an LLM
+
+FundIQ's AI features are deliberately rule-based and deterministic — no external AI API needed, no hallucinations, no latency.
+
+The **AI Risk Score** (0–100) is calculated server-side based on the user's actual fund allocation:
+- Equity-heavy portfolios push the score higher
+- Debt and liquid funds pull it down
+- The score updates live as holdings change
+
+The **AI Suggestions** engine reads the portfolio composition and generates diversification recommendations — "You're overweight in large-cap equity, consider adding a debt fund for balance" — based on the user's declared risk profile.
+
+The **Portfolio Rebalance** tool suggests target allocation percentages across asset classes based on risk tolerance, then shows the gap between where the portfolio is and where it should be.
+
+All of this without a single API call to OpenAI or any external AI service. Just clean financial logic, well-executed.
+
+---
+
+### 🚀 Deployment — Taking It Live
+
+The project was deployed on **Vercel** — with a custom [vercel.json](file:///d:/Antigravity%20Projects/FundIQ/vercel.json) configuration routing all API calls through the Express backend and all client-side routes falling back to the React SPA.
+
+After resolving ESLint build errors and Vercel configuration challenges (a journey documented in its own right across multiple debug sessions), FundIQ went live — accessible from anywhere, with a real MongoDB Atlas cluster serving real data.
+
+---
+
+### 🎯 What FundIQ Represents
+
+FundIQ isn't just a personal finance tool. It's a **full-stack showcase** — demonstrating mastery of:
+- Secure JWT-based auth flows
+- Real-time third-party API integration
+- Complex data visualization with multiple chart types
+- AI logic without external AI dependencies
+- Production deployment on Vercel with proper routing
+
+It's the kind of project that answers the question every investor asks on Monday morning — *"How am I actually doing?"* — in one clean, intelligent, beautifully designed dashboard.
+
+---
+
+*Built with 💚 by Ronak — Fintech AI Developer.*

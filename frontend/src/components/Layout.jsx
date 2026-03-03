@@ -49,7 +49,7 @@ export default function Layout({ children }) {
 
             {/* Sidebar */}
             <aside
-                className={`fixed left-0 top-0 bottom-0 z-50 w-[240px] min-h-screen flex flex-col pt-5 pb-5 px-3 transition-transform duration-300 ease-in-out lg:translate-x-0 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'}`}
+                className={`fixed left-0 top-0 bottom-0 z-50 w-60 min-h-screen flex flex-col pt-5 pb-5 px-3 transition-transform duration-300 ease-in-out lg:translate-x-0 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'}`}
                 style={{
                     background: '#0f1629',
                     borderRight: '1px solid rgba(99,130,255,0.12)',
@@ -120,7 +120,7 @@ export default function Layout({ children }) {
             </aside>
 
             {/* Main Content */}
-            <div className="flex flex-col min-h-screen lg:ml-[240px]">
+            <div className="flex flex-col min-h-screen lg:ml-60">
                 {/* Topbar */}
                 <header style={{
                     background: 'rgba(10,14,26,0.95)', backdropFilter: 'blur(20px)',

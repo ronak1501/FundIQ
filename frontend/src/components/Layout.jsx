@@ -119,7 +119,7 @@ export default function Layout({ children }) {
             </aside>
 
             {/* Main Content */}
-            <div className="flex-1 flex flex-col min-w-0 h-screen overflow-hidden">
+            <div className="flex-1 flex flex-col min-w-0 h-screen overflow-hidden lg:pl-4">
                 {/* Topbar */}
                 <header className="shrink-0 flex items-center justify-center sticky top-0 z-30 px-6 h-16"
                     style={{
